@@ -19,3 +19,34 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #09886A; /* Green background */
+  padding: 10px 20px; /* Padding for navbar */
+}
+
+.navbar h1 {
+  font-size: 24px; /* Large font size */
+  font-weight: bold; /* Bold font */
+  margin: 0; /* Remove default margin */
+  color: white; /* White text color */
+}
+
+.nav-links {
+  list-style: none; /* Remove bullet points */
+  display: flex; /* Use flexbox for alignment */
+  gap: 20px; /* Space between links */
+}
+
+.nav-links li {
+  color: white; /* White text color for links */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+.nav-links li:hover {
+  text-decoration: underline; /* Underline on hover */
+}
