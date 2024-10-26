@@ -3,7 +3,7 @@ spring:
     name: "blog"
   data:
     mongodb:
-      uri: "mongodb+srv://dnsfr:P9uBehRLw0eROSul@dfrblog.kqbgs.mongodb.net/?retryWrites=true&w=majority&appName=DFRBLOG"
+      uri: "mongodb+srv://dnsfr:P9uBehRLw0eROSul@dfrblog.kqbgs.mongodb.net/dansfarmaroot?retryWrites=true&w=majority&appName=DFRBLOG"
 jwt:
   secret: "CentennialCollege"
 server:
