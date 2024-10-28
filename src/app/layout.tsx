@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link"; // Import Link
 import "./globals.css";
+import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.core.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
