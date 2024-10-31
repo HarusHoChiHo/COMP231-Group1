@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import {LegacyRef, useEffect, useRef, useState} from "react";
+import { LegacyRef, useRef, useState } from "react";
 import Editor from "@/components/ArticleManager";
 import Delta from "quill-delta";
 import "quill/dist/quill.snow.css";
@@ -32,7 +32,7 @@ export default function Page() {
         [{'align': []}],
 
         ['clean']
-    ]
+    ];
 
     const options = {
         debug      : "error",
@@ -42,22 +42,26 @@ export default function Page() {
         placeholder: "Testing",
         readOnly   : false,
         theme      : "snow"
-    }
+    };
 
     const updateText = (value: string) => {
         setText(value);
-    }
+    };
 
     return (
-        <div>
-            <Editor
-                ref={quillRef}
-                readOnly={options.readOnly}
-                defaultValue={new Delta().insert(text)}
-                onSelectionChange={setRange}
-                onTextChange={setLastChange}
-                options={options}
-            />
+        <div style={{ display: 'flex', justifyContent: 'center', minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
+            <div style={{ width: '100%', maxWidth: '800px', padding: '0 10px', color: '#333', fontFamily: 'Arial, sans-serif' }}>
+                <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+                    <Editor
+                        ref={quillRef}
+                        readOnly={options.readOnly}
+                        defaultValue={new Delta().insert(text)}
+                        onSelectionChange={setRange}
+                        onTextChange={setLastChange}
+                        options={options}
+                    />
+                </div>
+            </div>
         </div>
     );
 }

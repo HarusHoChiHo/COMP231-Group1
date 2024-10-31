@@ -30,14 +30,27 @@ export default function RootLayout({
       <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <nav className="navbar">
-        <Link href="/pages/home" style={{ textDecoration: 'none', color: 'white' }}> {/* Make logo clickable */}
-          <h1>Dan's Farmaroot</h1>
-        </Link>
-        <ul className="nav-links">
-          <li>
-            <Link href="/pages/login" style={{ fontWeight: 'bold', color: 'white', textDecoration: 'none' }}>Login</Link> {/* Bold Login button */}
-          </li>
-        </ul>
+          <Link href="/pages/home" style={{textDecoration: 'none', color: 'white'}}> {/* Make logo clickable */}
+              <h1>Dan's Farmaroot</h1>
+          </Link>
+          <ul className="nav-links">
+              <li>
+                  <Link href="/pages/login" style={{
+                      fontWeight: 'bold',
+                      color: 'white',
+                      textDecoration: 'none'
+                  }}>Login</Link> {/* Bold Login button */}
+              </li>
+          </ul>
+          <ul className="nav-links">
+              <li>
+                  <Link href="/pages/text_editor" style={{
+                      fontWeight: 'bold',
+                      color: 'white',
+                      textDecoration: 'none'
+                  }}>text_editor</Link> {/* Bold Login button */}
+              </li>
+          </ul>
       </nav>
       {children}
       </body>
