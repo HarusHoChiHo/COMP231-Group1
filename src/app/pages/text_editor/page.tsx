@@ -51,7 +51,7 @@ export default function Page() {
 
         // Prepare blog data to send
         const blogData = {
-            id: "",
+            id: null,
             title: "Blog Title Here", //Add slots for titles
             content: content,
             author: { id: "67211f481a20111bfd62de92"}
