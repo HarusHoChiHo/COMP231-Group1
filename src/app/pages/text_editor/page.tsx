@@ -5,10 +5,11 @@ import Editor from "@/components/ArticleManager";
 import Delta from "quill-delta";
 import "quill/dist/quill.snow.css";
 import Quill from "quill";
-import {HttpServices} from "@/lib/HttpServices";
+import { HttpServices } from "@/lib/HttpServices";
 
 export default function Page() {
     const httpService = new HttpServices();
+    const [title, setTitle] = useState(""); // State for blog title
     const [text, setText] = useState("abc");
     const [range, setRange] = useState();
     const [lastChange, setLastChange] = useState();
@@ -52,9 +53,9 @@ export default function Page() {
         // Prepare blog data to send
         const blogData = {
             id: null,
-            title: "Blog Title Here", //Add slots for titles
+            title: title, // Include title from state
             content: content,
-            author: { id: "67211f481a20111bfd62de92"}
+            author: { id: "67211f481a20111bfd62de92" }
         };
 
         console.log("Creating post with data:", blogData);
@@ -68,10 +69,22 @@ export default function Page() {
             });
     };
 
-
     return (
         <div style={{ display: 'flex', justifyContent: 'center', minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
             <div style={{ width: '100%', maxWidth: '800px', padding: '0 10px', color: '#333', fontFamily: 'Arial, sans-serif' }}>
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Enter blog title"
+                    style={{
+                        width: '100%',
+                        padding: '10px',
+                        marginBottom: '10px',
+                        borderRadius: '5px',
+                        border: '1px solid #ccc'
+                    }}
+                />
                 <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', marginBottom: '20px' }}>
                     <Editor
                         ref={quillRef}
