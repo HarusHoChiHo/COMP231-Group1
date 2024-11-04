@@ -12,11 +12,11 @@ export default function BlogListPage() {
     useEffect(() => {
         // Fetch blogs on component mount
         httpService.callAPI("/api/blogs",null, "GET")
-            .then(response => {
-                setBlogs(response.body as Blog[]);
-                setLoading(false);
-                console.log(response);
-            })
+            .then(async response => {
+            setBlogs(await response.json());
+            setLoading(false);
+            console.log(response);
+        })
             .catch(error => {
                 console.error("Error fetching blogs:", error);
                 setLoading(false);
@@ -42,6 +42,7 @@ export default function BlogListPage() {
                         }}>
                             <h2>{blog.title}</h2>
                             <p>Author: {blog.author.id}</p>
+                            <p>Publish Date: {blog.publishDate}</p> 
                             <p>{blog.content.slice(0, 100)}...</p>
                         </div>
                     ))
