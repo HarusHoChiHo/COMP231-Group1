@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: "blog"
+  data:
+    mongodb:
+      uri: "mongodb+srv://dnsfr:P9uBehRLw0eROSul@dfrblog.kqbgs.mongodb.net/dansfarmaroot?retryWrites=true&w=majority&appName=DFRBLOG"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "https://idp.example.com/issuer"
+server:
+  port: 8081
