@@ -2,14 +2,12 @@ package com.dansfarmaroots.blog.blog;
 
 import com.dansfarmaroots.blog.user.User;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
