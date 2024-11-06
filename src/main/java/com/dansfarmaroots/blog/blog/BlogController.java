@@ -19,6 +19,11 @@ public class BlogController {
         return new ResponseEntity<>(blogService.getAllBlogs(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Blog> getBlog(@PathVariable String id){
+        return new ResponseEntity<>(blogService.getBlogById(id), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Blog> createBlog(@RequestBody Blog blog) {
         return new ResponseEntity<>(blogService.createBlog(blog), HttpStatus.CREATED);

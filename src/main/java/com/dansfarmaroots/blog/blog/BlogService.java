@@ -26,4 +26,8 @@ public class BlogService {
     public long removeBlog(String id) {
         return blogRepository.removeById(id);
     }
+
+    public Blog getBlogById(String id){
+        return blogRepository.findById(id).orElseThrow();
+    }
 }
