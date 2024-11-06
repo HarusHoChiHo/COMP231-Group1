@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 import {Blog} from "@/lib/models/Blog";
+import Link from "next/link";
 
 export default function BlogListPage() {
     const httpService = new HttpServices();
@@ -66,7 +67,7 @@ export default function BlogListPage() {
                                 marginBottom   : '20px'
                             }}
                         >
-                            <a href={`/pages/home/${blog.id}`}>{blog.title}</a>
+                            <Link href={`/pages/home/${blog.id}`}><h2>{blog.title}</h2></Link>
                             <p>Author: {blog.author.id}</p>
                             <p>Publish Date: {blog.publishDate}</p>
                             <p>{blog.content.slice(0, 100)}...</p>
