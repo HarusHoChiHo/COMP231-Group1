@@ -19,5 +19,11 @@ public class BlogService {
         return blogRepository.save(blog);
     }
 
-    // Add other CRUD methods here (update, delete, etc.)
+    public Blog updateBlog(Blog blog) {
+        return blogRepository.save(blog);
+    }
+
+    public long removeBlog(String id) {
+        return blogRepository.removeById(id);
+    }
 }

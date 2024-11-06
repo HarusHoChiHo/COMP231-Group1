@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BlogRepository extends MongoRepository<Blog, String> {
-    // Custom query methods can be defined here
+    long removeById(String id);
 }

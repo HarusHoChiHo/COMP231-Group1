@@ -1,5 +1,6 @@
 package com.dansfarmaroots.blog.blog;
 
+import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +24,13 @@ public class BlogController {
         return new ResponseEntity<>(blogService.createBlog(blog), HttpStatus.CREATED);
     }
 
-    // Add other endpoints (update, delete, etc.)
+    @PostMapping(path = "update")
+    public ResponseEntity<Blog> updateBlog(@RequestBody Blog blog) {
+        return new ResponseEntity<>(blogService.updateBlog(blog), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Long> removeBlog(@PathVariable String id) {
+        return new ResponseEntity<>(blogService.removeBlog(id), HttpStatus.OK);
+    }
 }
