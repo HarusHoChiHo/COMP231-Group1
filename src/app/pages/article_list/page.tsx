@@ -66,7 +66,7 @@ export default function BlogListPage() {
                                 marginBottom   : '20px'
                             }}
                         >
-                            <h2>{blog.title}</h2>
+                            <a href={`/pages/home/${blog.id}`}>{blog.title}</a>
                             <p>Author: {blog.author.id}</p>
                             <p>Publish Date: {blog.publishDate}</p>
                             <p>{blog.content.slice(0, 100)}...</p>

@@ -1,36 +1,53 @@
-'use client';
-import { useState } from 'react';
-import Link from 'next/link';
+"use client";
 
-export default function Page() {
-    // State to hold comments
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { HttpServices } from "@/lib/HttpServices";
+import {Blog} from "@/lib/models/Blog";
+
+export default function BlogDetailPage() {
+    const router = useRouter();
+    const { id } = router.query; // Get the blog ID from the route
+    const httpService = new HttpServices();
+
+    const [blog, setBlog] = useState<Blog>()
     const [comments, setComments] = useState<string[]>([]);
     const [newComment, setNewComment] = useState('');
 
-    // Handle adding a new comment
+    useEffect(() => {
+        // Fetch blogs on component mount
+        (async () => {
+
+            try {
+                const response: Blog = await (await (httpService.callAPI(`/api/blogs/${router.query.id}`, null, "GET"))).json();
+                setBlog(response);
+            } catch (e) {
+                console.log(e);
+            }
+
+
+
+        })();
+
+    }, []);
+
     const handleCommentSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (newComment.trim()) {
             setComments([...comments, newComment.trim()]);
-            setNewComment(''); // Clear the input field
+            setNewComment('');
         }
     };
+
+    if (!blog) return <div>Loading...</div>;
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
             <div style={{ width: '100%', maxWidth: '800px', padding: '0 10px', color: '#333', fontFamily: 'Arial, sans-serif' }}>
                 <article style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', marginBottom: '20px' }}>
-                    <h2 style={{ fontSize: '24px', marginBottom: '10px' }}>Understanding the Benefits of DFENERGY</h2>
-                    <p style={{ lineHeight: '1.6' }}>
-                        DFENERGY is a revolutionary product designed to enhance your energy levels and improve your overall well-being.
-                        With its unique blend of natural ingredients, it provides sustained energy without the crash associated with traditional energy drinks.
-                    </p>
-                    <p style={{ lineHeight: '1.6' }}>
-                        In this blog, we will explore the various benefits of DFENERGY and how it can help you lead a more active and fulfilling life.
-                    </p>
-                    <p style={{ lineHeight: '1.6' }}>
-                        Whether you're a fitness enthusiast or just looking for an extra boost during your busy day, DFENERGY is here to help.
-                    </p>
+                    <h2 style={{ fontSize: '24px', marginBottom: '10px' }}>{blog.title}</h2>
+                    <p>By {blog.author.id}</p>
+                    <p style={{ lineHeight: '1.6' }}>{blog.content}</p>
                 </article>
 
                 <section style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
@@ -56,8 +73,6 @@ export default function Page() {
                         ))}
                     </ul>
                 </section>
-
-
             </div>
         </div>
     );
