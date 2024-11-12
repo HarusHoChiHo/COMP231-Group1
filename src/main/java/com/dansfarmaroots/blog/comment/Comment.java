@@ -22,6 +22,5 @@ public class Comment {
     public Date publishDate;
 
     @DBRef
-    @JsonIgnore
     private Blog blogId;
 }
