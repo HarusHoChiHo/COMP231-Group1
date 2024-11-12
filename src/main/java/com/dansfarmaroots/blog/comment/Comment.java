@@ -1,6 +1,7 @@
-package com.dansfarmaroots.blog.blog;
+package com.dansfarmaroots.blog.comment;
 
-import com.dansfarmaroots.blog.user.User;
+import com.dansfarmaroots.blog.blog.Blog;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,14 +14,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "blogs")
-public class Blog {
-    // Getters and Setters
+@Document(collection = "comments")
+public class Comment {
     @Id
     private String id;
-    private String title;
     private String content;
-    private Date publishDate;
+    public Date publishDate;
+
     @DBRef
-    private User author;
+    @JsonIgnore
+    private Blog blogId;
 }
