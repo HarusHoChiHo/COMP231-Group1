@@ -2,11 +2,27 @@ import {User} from "@/lib/models/User";
 import {id} from "postcss-selector-parser";
 
 interface IBlog{
-    id: string;
+    id: string | null;
     title: string;
     content: string;
     publishDate: string;
-    author: User;
+}
+
+export class BlogCreation implements IBlog{
+    id: null;
+    title: string;
+    content: string;
+    publishDate: string;
+    author: { id: string};
+
+
+    constructor(title: string, content: string, publishDate: string, author: { id: string}) {
+        this.id = null;
+        this.title = title;
+        this.content = content;
+        this.publishDate = publishDate;
+        this.author = author;
+    }
 }
 
 export class Blog implements IBlog{

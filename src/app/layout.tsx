@@ -35,7 +35,7 @@ export default function RootLayout({
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <nav className="navbar">
                     <Link
-                        href="/pages/home"
+                        href="/pages/article_list"
                         style={{
                             textDecoration: 'none',
                             color         : 'white'

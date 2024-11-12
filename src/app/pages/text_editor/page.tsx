@@ -6,6 +6,8 @@ import Delta from "quill-delta";
 import "quill/dist/quill.snow.css";
 import Quill from "quill";
 import { HttpServices } from "@/lib/HttpServices";
+import {BlogCreation} from "@/lib/models/Blog";
+import {useAuth} from "@/app/AuthContext";
 
 export default function Page() {
     const httpService = new HttpServices();
@@ -13,12 +15,13 @@ export default function Page() {
     const [text, setText] = useState("abc");
     const [range, setRange] = useState();
     const [lastChange, setLastChange] = useState();
+    // const auth = useAuth();
 
     const quillRef: LegacyRef<Quill> = useRef(null);
 
-    useEffect(() => {
-        console.log(JSON.stringify(quillRef.current?.getContents()));
-    }, [text]);
+    // useEffect(() => {
+    //     console.log(JSON.stringify(quillRef.current?.getContents()));
+    // }, [text]);
 
     const toolBarOptions = [
         ['bold', 'italic', 'underline', 'strike'],
@@ -51,12 +54,12 @@ export default function Page() {
         const content = JSON.stringify(quillRef.current?.getContents());
 
         // Prepare blog data to send
-        const blogData = {
-            id: null,
-            title: title, // Include title from state
-            content: content,
-            author: { id: "67211f481a20111bfd62de92" }
-        };
+        const blogData: BlogCreation = new BlogCreation(
+            title, // Include title from state
+            content,
+            new Date().toUTCString(),
+            { id: "67211f481a20111bfd62de92" }
+        );
 
         console.log("Creating post with data:", blogData);
 

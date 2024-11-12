@@ -1,14 +1,28 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {LegacyRef, useEffect, useRef, useState} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 import {Blog} from "@/lib/models/Blog";
 import Link from "next/link";
+import Delta from "quill-delta";
+import Editor from "@/components/ArticleManager";
+import Quill from "quill";
 
 export default function BlogListPage() {
     const httpService = new HttpServices();
     const [blogs, setBlogs] = useState<Blog[]>()
     const [loading, setLoading] = useState(true);
+    const quillRef: LegacyRef<Quill> = useRef(null);
+
+    const options = {
+        debug      : "error",
+        modules    : {
+            toolbar: null
+        },
+        placeholder: "Testing",
+        readOnly   : false,
+        theme      : "snow"
+    };
 
     useEffect(() => {
         // Fetch blogs on component mount
@@ -20,10 +34,10 @@ export default function BlogListPage() {
             } catch (e) {
                 console.log(e);
             }
-            
-            
+
+
         })();
-        
+
     }, []);
 
     if (loading) {
@@ -70,7 +84,12 @@ export default function BlogListPage() {
                             <Link href={`/pages/home/${blog.id}`}><h2>{blog.title}</h2></Link>
                             <p>Author: {blog.author.id}</p>
                             <p>Publish Date: {blog.publishDate}</p>
-                            <p>{blog.content.slice(0, 100)}...</p>
+                            {/*<p ><Editor*/}
+                            {/*    ref={quillRef}*/}
+                            {/*    readOnly={!options.readOnly}*/}
+                            {/*    options={options}*/}
+                            {/*    defaultValue={new Delta((JSON.parse(blog.content)))}*/}
+                            {/*/></p>*/}
                         </div>
                     ))
                 }

@@ -1,30 +1,35 @@
 "use client";
 
-import {useState, useEffect} from "react";
+import {useState, useEffect, useId} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 import {Blog} from "@/lib/models/Blog";
 import {useParams} from "next/navigation";
+import {Comments, CommentsCreation} from "@/lib/models/Comments";
+
 
 export default function BlogDetailPage() {
-    const params = useParams();
+    const params = useParams<{
+        id: string
+    }>();
     const httpService = new HttpServices();
 
     const [blog, setBlog] = useState<Blog>()
-    const [comments, setComments] = useState<string[]>([]);
-    const [newComment, setNewComment] = useState('');
+    const [comments, setComments] = useState<Comments[]>([]);
+    const [newComment, setNewComment] = useState<string>('');
+    const [id, setId] = useState<string>('');
 
     useEffect(() => {
-        // Fetch blogs on component mousnt
         (async () => {
 
             try {
-                const response: Blog = await (await (httpService.callAPI(`/api/blogs/${params.id}`, null, "GET"))).json();
-                setBlog(response);
+                setId(params.id);
+                const responseBlog: Blog = await (await (httpService.callAPI(`/api/blogs/${params.id}`, null, "GET"))).json();
+                const responseComment: Comments[] = await (await (httpService.callAPI(`/api/comments/${params.id}`, null, "GET"))).json();
+                setBlog(responseBlog);
+                setComments(responseComment);
             } catch (e) {
                 console.log(e);
             }
-
-
         })();
 
     }, []);
@@ -32,8 +37,16 @@ export default function BlogDetailPage() {
     const handleCommentSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (newComment.trim()) {
-            setComments([...comments, newComment.trim()]);
-            setNewComment('');
+            (async () => {
+                try {
+                    const newComments: CommentsCreation = new CommentsCreation(null, newComment, new Date().toUTCString(), { id:id});
+                    
+                    setComments([await (await httpService.callAPI(`/api/comments`, newComments, "POST")).json(), ...comments].sort((first: Comments, second: Comments) => -(Date.parse(first.publishDate) - Date.parse(second.publishDate))));
+                    setNewComment('');
+                } catch (e) {
+                    console.log(e)
+                }
+            })();
         }
     };
 
@@ -128,9 +141,9 @@ export default function BlogDetailPage() {
                             padding      : '0'
                         }}
                     >
-                        {comments.map((comment, index) => (
+                        {comments.map((comment) => (
                             <li
-                                key={index}
+                                key={comment.id}
                                 style={{
                                     marginBottom   : '10px',
                                     padding        : '10px',
@@ -139,7 +152,14 @@ export default function BlogDetailPage() {
                                     backgroundColor: '#f9f9f9'
                                 }}
                             >
-                                {comment}
+                                <p>{comment.content}</p>
+                                <span>{new Date(comment.publishDate).toLocaleString("Locale", {
+                                    year  : "numeric",
+                                    month : "2-digit",
+                                    day   : "2-digit",
+                                    hour  : "2-digit",
+                                    minute: "2-digit"
+                                })}</span>
                             </li>
                         ))}
                     </ul>
