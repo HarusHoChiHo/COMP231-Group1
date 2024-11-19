@@ -10,7 +10,7 @@ import Quill from "quill";
 
 export default function BlogListPage() {
     const httpService = new HttpServices();
-    const [blogs, setBlogs] = useState<Blog[]>()
+    const [blogs, setBlogs] = useState<Blog[]>();
     const [loading, setLoading] = useState(true);
     const quillRef: LegacyRef<Quill> = useRef(null);
 
@@ -34,11 +34,29 @@ export default function BlogListPage() {
             } catch (e) {
                 console.log(e);
             }
-
-
         })();
-
     }, []);
+
+    const handleDelete = async (id: string) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this blog?");
+        if (!confirmDelete) return;
+
+        try {
+            await httpService.callAPI(`/api/blogs/${id}`, null, "DELETE");
+            // Remove the deleted blog from the state
+            setBlogs(blogs?.filter((blog) => blog.id !== id));
+            alert("Blog deleted successfully.");
+        } catch (e) {
+            console.error("Error deleting the blog:", e);
+            alert("Failed to delete the blog.");
+        }
+    };
+
+
+    const handleEdit = (id: string) => {
+        // Navigate to the edit page (create an edit page for this)
+        window.location.href = `/blogs/text_editor/${id}`;
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -78,18 +96,45 @@ export default function BlogListPage() {
                                 padding        : '20px',
                                 borderRadius   : '8px',
                                 boxShadow      : '0 2px 4px rgba(0,0,0,0.1)',
-                                marginBottom   : '20px'
+                                marginBottom   : '20px',
+                                display        : 'flex',
+                                justifyContent : 'space-between',
+                                alignItems     : 'center'
                             }}
                         >
-                            <Link href={`/pages/home/${blog.id}`}><h2>{blog.title}</h2></Link>
-                            <p>Author: {blog.author.id}</p>
-                            <p>Publish Date: {blog.publishDate}</p>
-                            {/*<p ><Editor*/}
-                            {/*    ref={quillRef}*/}
-                            {/*    readOnly={!options.readOnly}*/}
-                            {/*    options={options}*/}
-                            {/*    defaultValue={new Delta((JSON.parse(blog.content)))}*/}
-                            {/*/></p>*/}
+                            <div>
+                                <Link href={`/pages/home/${blog.id}`}><h2>{blog.title}</h2></Link>
+                                <p>Author: {blog.author.username}</p>
+                                <p>Publish Date: {blog.publishDate}</p>
+                            </div>
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                <button
+                                    onClick={() => handleEdit(blog.id!)}
+                                    style={{
+                                        backgroundColor: '#007bff',
+                                        color          : 'white',
+                                        border         : 'none',
+                                        padding        : '10px 15px',
+                                        borderRadius   : '4px',
+                                        cursor         : 'pointer'
+                                    }}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(blog.id!)}
+                                    style={{
+                                        backgroundColor: '#dc3545',
+                                        color          : 'white',
+                                        border         : 'none',
+                                        padding        : '10px 15px',
+                                        borderRadius   : '4px',
+                                        cursor         : 'pointer'
+                                    }}
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     ))
                 }

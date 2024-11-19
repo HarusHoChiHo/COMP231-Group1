@@ -85,7 +85,7 @@ export default function BlogDetailPage() {
                             marginBottom: '10px'
                         }}
                     >{blog.title}</h2>
-                    <p>By {blog.author.id}</p>
+                    <p>By {blog.author.username}</p>
                     <p style={{lineHeight: '1.6'}}>{blog.content}</p>
                 </article>
 
