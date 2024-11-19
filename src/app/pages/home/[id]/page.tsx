@@ -1,10 +1,13 @@
 "use client";
 
-import {useState, useEffect, useId} from "react";
+import {useState, useEffect, useId, LegacyRef, useRef} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 import {Blog} from "@/lib/models/Blog";
 import {useParams} from "next/navigation";
 import {Comments, CommentsCreation} from "@/lib/models/Comments";
+import Delta from "quill-delta";
+import Editor from "@/components/ArticleManager";
+import Quill from "quill";
 
 
 export default function BlogDetailPage() {
@@ -13,11 +16,23 @@ export default function BlogDetailPage() {
     }>();
     const httpService = new HttpServices();
 
-    const [blog, setBlog] = useState<Blog>()
+    const [blog, setBlog] = useState<Blog>();
     const [comments, setComments] = useState<Comments[]>([]);
     const [newComment, setNewComment] = useState<string>('');
     const [id, setId] = useState<string>('');
 
+    const quillRef: LegacyRef<Quill> = useRef(null);
+
+    const options = {
+        debug      : "error",
+        modules    : {
+            toolbar: null
+        },
+        placeholder: "Testing",
+        readOnly   : true,
+        theme      : "snow"
+    };
+    
     useEffect(() => {
         (async () => {
 
@@ -86,7 +101,14 @@ export default function BlogDetailPage() {
                         }}
                     >{blog.title}</h2>
                     <p>By {blog.author.username}</p>
-                    <p style={{lineHeight: '1.6'}}>{blog.content}</p>
+                    <Editor
+                        ref={quillRef}
+                        readOnly={options.readOnly}
+                        defaultValue={new Delta(JSON.parse(blog?.content as string)["ops"])}
+                        onSelectionChange={() => {}}
+                        onTextChange={() => {}}
+                        options={options}
+                    />
                 </article>
 
                 <section

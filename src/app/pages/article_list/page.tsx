@@ -55,7 +55,7 @@ export default function BlogListPage() {
 
     const handleEdit = (id: string) => {
         // Navigate to the edit page (create an edit page for this)
-        window.location.href = `/blogs/text_editor/${id}`;
+        window.location.href = `/pages/text_editor/${id}`;
     };
 
     if (loading) {
@@ -105,9 +105,20 @@ export default function BlogListPage() {
                             <div>
                                 <Link href={`/pages/home/${blog.id}`}><h2>{blog.title}</h2></Link>
                                 <p>Author: {blog.author.username}</p>
-                                <p>Publish Date: {blog.publishDate}</p>
+                                <p>Publish Date: {new Date(blog.publishDate).toLocaleString("Locale", {
+                                    year  : "numeric",
+                                    month : "2-digit",
+                                    day   : "2-digit",
+                                    hour  : "2-digit",
+                                    minute: "2-digit"
+                                })}</p>
                             </div>
-                            <div style={{ display: 'flex', gap: '10px' }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    gap: '10px'
+                                }}
+                            >
                                 <button
                                     onClick={() => handleEdit(blog.id!)}
                                     style={{

@@ -40,7 +40,7 @@ export default function RootLayout({
                             textDecoration: 'none',
                             color         : 'white'
                         }}
-                    > {/* Make logo clickable */}
+                    >
                         <h1>Dan's Farmaroot</h1>
                     </Link>
                     <ul className="nav-links">
@@ -52,7 +52,7 @@ export default function RootLayout({
                                     color         : 'white',
                                     textDecoration: 'none'
                                 }}
-                            >Login</Link> {/* Bold Login button */}
+                            >Login</Link>
                         </li>
                     </ul>
                     <ul className="nav-links">
@@ -64,7 +64,7 @@ export default function RootLayout({
                                     color         : 'white',
                                     textDecoration: 'none'
                                 }}
-                            >text_editor</Link> {/* Bold Login button */}
+                            >Write article</Link>
                         </li>
                     </ul>
                 </nav>
