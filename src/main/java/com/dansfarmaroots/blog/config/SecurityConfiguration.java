@@ -24,7 +24,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoders;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
     @Bean
     public CorsFilter corsFilter() {
@@ -45,13 +46,12 @@ public class SecurityConfiguration {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((authz) -> authz
 //                    .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll() // For swagger
-//                    .requestMatchers("/auth/login/**", "/auth/register/**").permitAll() // For register and login
-//                    .anyRequest().authenticated()
-                            .anyRequest().permitAll()
+                    .requestMatchers("/api/user/login/**").permitAll() // For register and login
+                    .anyRequest().authenticated()
             ).sessionManagement((management) -> management
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .oauth2ResourceServer().jwt();
-            .httpBasic(withDefaults());
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            ).httpBasic(withDefaults()
+            ).addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
