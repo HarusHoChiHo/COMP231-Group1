@@ -22,11 +22,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User findByUsername(String username) throws Exception {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
-        return null;
-    }
-
     public void createUser(String username, String password) {
         User user = new User();
         user.setUsername(username);
