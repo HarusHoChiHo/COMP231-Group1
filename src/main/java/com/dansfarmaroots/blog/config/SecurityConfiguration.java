@@ -42,10 +42,11 @@ public class SecurityConfiguration {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((authz) -> authz
 //                    .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll() // For swagger
-                    .requestMatchers(HttpMethod.GET, "/api/blogs/**").permitAll() // For comments
-                    .requestMatchers("/api/comments/**").permitAll() // For comments
-                    .requestMatchers("/api/user/login/**").permitAll() // For login
-                    .anyRequest().authenticated()
+//                    .requestMatchers(HttpMethod.GET, "/api/blogs/**").permitAll() // For comments
+//                    .requestMatchers("/api/comments/**").permitAll() // For comments
+//                    .requestMatchers("/api/user/login/**").permitAll() // For login
+//                    .anyRequest().authenticated()
+                            .anyRequest().permitAll()
             ).sessionManagement((management) -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             ).httpBasic(withDefaults()
