@@ -1,6 +1,8 @@
 package com.dansfarmaroots.blog.blog;
 
 
+import com.dansfarmaroots.blog.user.User;
+import com.dansfarmaroots.blog.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +12,16 @@ import java.util.List;
 public class BlogService {
     @Autowired
     private BlogRepository blogRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Blog> getAllBlogs() {
         return blogRepository.findAll();
     }
 
     public Blog createBlog(Blog blog) {
+        User author = userRepository.findById(blog.getAuthor().getId()).get();
+        blog.setAuthor(author);
         return blogRepository.save(blog);
     }
 
