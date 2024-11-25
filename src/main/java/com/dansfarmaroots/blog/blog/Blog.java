@@ -21,6 +21,5 @@ public class Blog {
     private String title;
     private String content;
     private Date publishDate;
-    @DBRef
-    private User author;
+    private String authorName;
 }

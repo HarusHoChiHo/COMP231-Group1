@@ -16,12 +16,10 @@ public class BlogService {
     private UserRepository userRepository;
 
     public List<Blog> getAllBlogs() {
-        return blogRepository.findAll();
+        return blogRepository.findAllByOrderByPublishDateDesc();
     }
 
     public Blog createBlog(Blog blog) {
-        User author = userRepository.findById(blog.getAuthor().getId()).get();
-        blog.setAuthor(author);
         return blogRepository.save(blog);
     }
 

@@ -4,6 +4,7 @@ spring:
   data:
     mongodb:
       uri: "mongodb+srv://dnsfr:P9uBehRLw0eROSul@dfrblog.kqbgs.mongodb.net/dansfarmaroot?retryWrites=true&w=majority&appName=DFRBLOG"
+      auto-index-creation: true
   security:
     oauth2:
       resourceserver:
