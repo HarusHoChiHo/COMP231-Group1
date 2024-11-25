@@ -1,12 +1,11 @@
 "use client"
 
-import {User} from "@/lib/models/User";
 import React, {createContext, ReactNode, useEffect, useState} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 
 interface AuthContextType {
     token: string | null;
-    login: (token: string, user: User) => void;
+    login: (token: string) => void;
     logout: () => void;
 }
 
@@ -33,7 +32,7 @@ export function AuthProvider({children}: AuthProviderProps) {
         }
     }, []);
 
-    const login = (newToken: string, user: User) => {
+    const login = (newToken: string) => {
         setToken(newToken);
         localStorage.setItem("token", newToken);
     }

@@ -13,15 +13,15 @@ export class BlogCreation implements IBlog{
     title: string;
     content: string;
     publishDate: string;
-    author: { id: string};
+    authorName: string;
 
 
-    constructor(title: string, content: string, publishDate: string, author: { id: string}) {
+    constructor(title: string, content: string, publishDate: string, authorName: string) {
         this.id = null;
         this.title = title;
         this.content = content;
         this.publishDate = publishDate;
-        this.author = author;
+        this.authorName = authorName;
     }
 }
 
@@ -30,14 +30,14 @@ export class Blog implements IBlog{
     title: string;
     content: string;
     publishDate: string;
-    author: User;
+    authorName: string;
 
 
-    constructor(id: string, title: string, content: string, publishDate: string, author: User) {
+    constructor(id: string, title: string, content: string, publishDate: string, authorName: string) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.publishDate = publishDate;
-        this.author = author;
+        this.authorName = authorName;
     }
 }

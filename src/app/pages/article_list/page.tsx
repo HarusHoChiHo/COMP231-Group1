@@ -4,15 +4,17 @@ import {LegacyRef, useEffect, useRef, useState} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 import {Blog} from "@/lib/models/Blog";
 import Link from "next/link";
-import Delta from "quill-delta";
-import Editor from "@/components/ArticleManager";
 import Quill from "quill";
+import {useAuth} from "@/app/AuthContext";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import {FaFilePen, FaRegTrashCan} from "react-icons/fa6";
 
 export default function BlogListPage() {
     const httpService = new HttpServices();
     const [blogs, setBlogs] = useState<Blog[]>();
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const quillRef: LegacyRef<Quill> = useRef(null);
+    const {token} = useAuth();
 
     const options = {
         debug      : "error",
@@ -25,12 +27,11 @@ export default function BlogListPage() {
     };
 
     useEffect(() => {
-        // Fetch blogs on component mount
         (async () => {
             try {
                 const response: Blog[] = await (await (httpService.callAPI("/api/blogs", null, "GET"))).json();
                 setBlogs(response);
-                setLoading(false);
+                setIsLoading(false);
             } catch (e) {
                 console.log(e);
             }
@@ -43,7 +44,6 @@ export default function BlogListPage() {
 
         try {
             await httpService.callAPI(`/api/blogs/${id}`, null, "DELETE");
-            // Remove the deleted blog from the state
             setBlogs(blogs?.filter((blog) => blog.id !== id));
             alert("Blog deleted successfully.");
         } catch (e) {
@@ -52,14 +52,12 @@ export default function BlogListPage() {
         }
     };
 
-
     const handleEdit = (id: string) => {
-        // Navigate to the edit page (create an edit page for this)
         window.location.href = `/pages/text_editor/${id}`;
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
+    if (isLoading) {
+        return <LoadingSpinner />;
     }
 
     return (
@@ -76,9 +74,10 @@ export default function BlogListPage() {
             <h1
                 style={{
                     color     : '#333',
-                    fontFamily: 'Arial, sans-serif'
+                    fontFamily: 'Arial, sans-serif',
+                    fontSize  : '2rem'
                 }}
-            >Blog List</h1>
+            >Latest News</h1>
             <div
                 style={{
                     width     : '100%',
@@ -88,7 +87,7 @@ export default function BlogListPage() {
                 }}
             >
                 {
-                    !loading && blogs?.map((blog, index) => (
+                    !isLoading && blogs?.map((blog, index) => (
                         <div
                             key={blog.id || index}
                             style={{
@@ -103,8 +102,14 @@ export default function BlogListPage() {
                             }}
                         >
                             <div>
-                                <Link href={`/pages/home/${blog.id}`}><h2>{blog.title}</h2></Link>
-                                <p>Author: {blog.author.username}</p>
+                                <Link href={`/pages/home/${blog.id}`}><h2
+                                    style={{
+                                        color     : '#333',
+                                        fontFamily: 'Arial, sans-serif',
+                                        fontSize  : '2rem'
+                                    }}
+                                ><b>{blog.title}</b></h2></Link>
+                                <p>Author: {blog.authorName}</p>
                                 <p>Publish Date: {new Date(blog.publishDate).toLocaleString("Locale", {
                                     year  : "numeric",
                                     month : "2-digit",
@@ -119,32 +124,36 @@ export default function BlogListPage() {
                                     gap: '10px'
                                 }}
                             >
-                                <button
-                                    onClick={() => handleEdit(blog.id!)}
-                                    style={{
-                                        backgroundColor: '#007bff',
-                                        color          : 'white',
-                                        border         : 'none',
-                                        padding        : '10px 15px',
-                                        borderRadius   : '4px',
-                                        cursor         : 'pointer'
-                                    }}
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(blog.id!)}
-                                    style={{
-                                        backgroundColor: '#dc3545',
-                                        color          : 'white',
-                                        border         : 'none',
-                                        padding        : '10px 15px',
-                                        borderRadius   : '4px',
-                                        cursor         : 'pointer'
-                                    }}
-                                >
-                                    Delete
-                                </button>
+                                {
+                                    token
+                                    ? (
+                                        <>
+                                            <button
+                                                onClick={() => handleEdit(blog.id!)}
+                                                style={{
+                                                    border         : 'none',
+                                                    padding        : '10px 15px',
+                                                    borderRadius   : '4px',
+                                                    cursor         : 'pointer'
+                                                }}
+                                            >
+                                                <FaFilePen size={"1.5rem"} title={"Edit"} color={"#05b138"}/>
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(blog.id!)}
+                                                style={{
+                                                    border         : 'none',
+                                                    padding        : '10px 15px',
+                                                    borderRadius   : '4px',
+                                                    cursor         : 'pointer'
+                                                }}
+                                            >
+                                                <FaRegTrashCan size={"1.5rem"} title={"Delete"} color={"#d60c0c"}/>
+                                            </button>
+                                        </>
+                                    )
+                                    : (<></>)
+                                }
                             </div>
                         </div>
                     ))

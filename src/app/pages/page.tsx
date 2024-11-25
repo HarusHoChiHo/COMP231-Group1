@@ -1,8 +1,12 @@
 'use client'
-import Image from "next/image";
+
+import {useEffect} from "react";
+import {useRouter} from "next/navigation";
 
 export default function page() {
-    return (
-        <h1>dog</h1>
-    );
+    const router = useRouter();
+
+    useEffect(() => {
+        router.push("/pages/article_list");
+    }, []);
 }

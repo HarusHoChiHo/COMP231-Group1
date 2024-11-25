@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import {useState, useEffect, useId, LegacyRef, useRef} from "react";
+import React, {LegacyRef, useEffect, useRef, useState} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 import {Blog} from "@/lib/models/Blog";
 import {useParams} from "next/navigation";
@@ -8,7 +8,7 @@ import {Comments, CommentsCreation} from "@/lib/models/Comments";
 import Delta from "quill-delta";
 import Editor from "@/components/ArticleManager";
 import Quill from "quill";
-
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function BlogDetailPage() {
     const params = useParams<{
@@ -24,18 +24,16 @@ export default function BlogDetailPage() {
     const quillRef: LegacyRef<Quill> = useRef(null);
 
     const options = {
-        debug      : "error",
         modules    : {
             toolbar: null
         },
-        placeholder: "Testing",
+        placeholder: "",
         readOnly   : true,
-        theme      : "snow"
+        theme      : ""
     };
-    
+
     useEffect(() => {
         (async () => {
-
             try {
                 setId(params.id);
                 const responseBlog: Blog = await (await (httpService.callAPI(`/api/blogs/${params.id}`, null, "GET"))).json();
@@ -46,7 +44,6 @@ export default function BlogDetailPage() {
                 console.log(e);
             }
         })();
-
     }, []);
 
     const handleCommentSubmit = (e: React.FormEvent) => {
@@ -54,8 +51,8 @@ export default function BlogDetailPage() {
         if (newComment.trim()) {
             (async () => {
                 try {
-                    const newComments: CommentsCreation = new CommentsCreation(null, newComment, new Date().toUTCString(), { id:id});
-                    
+                    const newComments: CommentsCreation = new CommentsCreation(null, newComment, new Date().toUTCString(), {id: id});
+
                     setComments([await (await httpService.callAPI(`/api/comments`, newComments, "POST")).json(), ...comments].sort((first: Comments, second: Comments) => -(Date.parse(first.publishDate) - Date.parse(second.publishDate))));
                     setNewComment('');
                 } catch (e) {
@@ -65,15 +62,19 @@ export default function BlogDetailPage() {
         }
     };
 
-    if (!blog) return <div>Loading...</div>;
+    if (!blog || !comments) {
+        return <LoadingSpinner />;
+    }
 
-    return (
+    return blog && comments && (
         <div
             style={{
                 display        : 'flex',
                 justifyContent : 'center',
                 minHeight      : '100vh',
-                backgroundColor: '#f5f5f5'
+                backgroundColor: '#f5f5f5',
+                alignItems     : 'flex-start',
+                paddingTop     : '20px'
             }}
         >
             <div
@@ -96,17 +97,23 @@ export default function BlogDetailPage() {
                 >
                     <h2
                         style={{
-                            fontSize    : '24px',
+                            color     : '#333',
+                            fontFamily: 'Arial, sans-serif',
+                            fontSize  : '2rem',
                             marginBottom: '10px'
                         }}
-                    >{blog.title}</h2>
-                    <p>By {blog.author.username}</p>
+                    >
+                        <b>{blog.title}</b>
+                    </h2>
+                    <p>By <b>{blog.authorName}</b></p>
                     <Editor
                         ref={quillRef}
                         readOnly={options.readOnly}
                         defaultValue={new Delta(JSON.parse(blog?.content as string)["ops"])}
-                        onSelectionChange={() => {}}
-                        onTextChange={() => {}}
+                        onSelectionChange={() => {
+                        }}
+                        onTextChange={() => {
+                        }}
                         options={options}
                     />
                 </article>
@@ -127,14 +134,20 @@ export default function BlogDetailPage() {
                     >Comments</h3>
                     <form
                         onSubmit={handleCommentSubmit}
-                        style={{marginBottom: '20px'}}
+                        style={{
+                            marginBottom  : '20px',
+                            display       : 'flex',
+                            flexDirection : 'row',
+                            alignItems    : 'center',
+                            justifyContent: 'space-between',
+                        }}
                     >
                         <textarea
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
-                            rows={3}
+                            rows={2}
                             style={{
-                                width       : '100%',
+                                width: '86%',
                                 marginBottom: '10px',
                                 borderRadius: '4px',
                                 border      : '1px solid #ccc',
@@ -149,18 +162,21 @@ export default function BlogDetailPage() {
                                 border         : 'none',
                                 backgroundColor: '#b18560',
                                 color          : 'white',
-                                borderRadius   : '4px',
-                                cursor         : 'pointer'
+                                borderRadius: '25px',
+                                cursor      : 'pointer',
+                                minWidth    : '90px',
+                                width       : '10%'
                             }}
                         >
-                            Submit
+                            Post
                         </button>
                     </form>
-
+                    <hr />
                     <ul
                         style={{
                             listStyleType: 'none',
-                            padding      : '0'
+                            padding  : '0',
+                            marginTop: '20px'
                         }}
                     >
                         {comments.map((comment) => (
@@ -169,9 +185,7 @@ export default function BlogDetailPage() {
                                 style={{
                                     marginBottom   : '10px',
                                     padding        : '10px',
-                                    border         : '1px solid #ccc',
-                                    borderRadius   : '5px',
-                                    backgroundColor: '#f9f9f9'
+                                    borderBottom: '1px solid #ccc',
                                 }}
                             >
                                 <p>{comment.content}</p>

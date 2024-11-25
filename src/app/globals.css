@@ -25,15 +25,15 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #09886A; /* Green background */
-  padding: 10px 20px; /* Padding for navbar */
+  background-color: white;
+  padding: 10px 20px;
 }
 
 .navbar h1 {
   font-size: 24px; /* Large font size */
   font-weight: bold; /* Bold font */
   margin: 0; /* Remove default margin */
-  color: white; /* White text color */
+  color: #09886A; /* White text color */
 }
 
 .nav-links {
@@ -43,7 +43,7 @@ body {
 }
 
 .nav-links li {
-  color: white; /* White text color for links */
+  color: #09886A;
   cursor: pointer; /* Change cursor on hover */
 }
 

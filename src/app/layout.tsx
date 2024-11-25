@@ -4,6 +4,9 @@ import Link from "next/link"; // Import Link
 import "./globals.css";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.core.css";
+import {Providers} from "@/app/providers";
+import NavigationBar from "@/components/NavBar";
+import WriteArticleButton from "@/components/WriteArticleButton";
 
 const geistSans = localFont({
     src     : "./fonts/GeistVF.woff",
@@ -33,42 +36,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                <nav className="navbar">
-                    <Link
-                        href="/pages/article_list"
-                        style={{
-                            textDecoration: 'none',
-                            color         : 'white'
-                        }}
-                    >
-                        <h1>Dan's Farmaroot</h1>
-                    </Link>
-                    <ul className="nav-links">
-                        <li>
-                            <Link
-                                href="/pages/login"
-                                style={{
-                                    fontWeight    : 'bold',
-                                    color         : 'white',
-                                    textDecoration: 'none'
-                                }}
-                            >Login</Link>
-                        </li>
-                    </ul>
-                    <ul className="nav-links">
-                        <li>
-                            <Link
-                                href="/pages/text_editor"
-                                style={{
-                                    fontWeight    : 'bold',
-                                    color         : 'white',
-                                    textDecoration: 'none'
-                                }}
-                            >Write article</Link>
-                        </li>
-                    </ul>
-                </nav>
-                {children}
+                <Providers>
+                    <NavigationBar />
+                    {children}
+                    <WriteArticleButton />
+                </Providers>
             </body>
         </html>
     );
