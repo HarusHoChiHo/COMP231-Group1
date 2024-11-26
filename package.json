@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": "22.5.1"
+  },
   "dependencies": {
     "@nextui-org/react": "^2.4.2",
     "jwt-decode": "^4.0.0",
