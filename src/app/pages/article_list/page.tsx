@@ -49,104 +49,124 @@ export default function BlogListPage() {
     }
 
     return (
-        <div
-            style={{
-                display        : 'flex',
-                flexDirection  : 'column',
-                alignItems     : 'center',
-                minHeight      : '100vh',
-                backgroundColor: '#f5f5f5',
-                padding        : '20px'
-            }}
-        >
-            <h1
-                style={{
-                    color     : '#b18560',
-                    fontFamily: 'Arial, sans-serif',
-                    fontSize  : '2rem'
-                }}
-            ><b>Latest News</b></h1>
+        <>
             <div
                 style={{
-                    width     : '100%',
-                    maxWidth  : '800px',
-                    color     : '#333',
-                    fontFamily: 'Arial, sans-serif'
+                    display        : 'flex',
+                    flexDirection  : 'column',
+                    alignItems     : 'center',
+                    minHeight      : '100vh',
+                    backgroundColor: '#f5f5f5',
+                    padding        : '20px'
                 }}
             >
-                {
-                    !isLoading && blogs?.map((blog, index) => (
-                        <div
-                            key={blog.id || index}
-                            style={{
-                                backgroundColor: 'white',
-                                padding        : '20px',
-                                borderRadius   : '8px',
-                                boxShadow      : '0 2px 4px rgba(0,0,0,0.1)',
-                                marginBottom   : '20px',
-                                display        : 'flex',
-                                justifyContent : 'space-between',
-                                alignItems     : 'center'
-                            }}
-                        >
-                            <div>
-                                <Link href={`/pages/home/${blog.id}`}><h2
-                                    style={{
-                                        color     : '#09886A',
-                                        fontFamily: 'Arial, sans-serif',
-                                        fontSize  : '2rem'
-                                    }}
-                                ><b>{blog.title}</b></h2></Link>
-                                <p><b>Author: {blog.authorName}</b></p>
-                                <p><b>Publish Date: {new Date(blog.publishDate).toLocaleString("Locale", {
-                                    year  : "numeric",
-                                    month : "2-digit",
-                                    day   : "2-digit",
-                                    hour  : "2-digit",
-                                    minute: "2-digit"
-                                })}</b></p>
-                            </div>
+                <h1
+                    style={{
+                        color     : '#b18560',
+                        fontFamily: 'Arial, sans-serif',
+                        fontSize  : '2rem'
+                    }}
+                >
+                    <b>Latest News</b>
+                </h1>
+                <div
+                    style={{
+                        width     : '100%',
+                        maxWidth  : '800px',
+                        color     : '#333',
+                        fontFamily: 'Arial, sans-serif'
+                    }}
+                >
+                    {
+                        !isLoading && blogs?.map((blog, index) => (
                             <div
+                                key={blog.id || index}
                                 style={{
-                                    display: 'flex',
-                                    gap: '10px'
+                                    backgroundColor: 'white',
+                                    padding        : '20px',
+                                    borderRadius   : '8px',
+                                    boxShadow      : '0 2px 4px rgba(0,0,0,0.1)',
+                                    marginBottom   : '20px',
+                                    display        : 'flex',
+                                    justifyContent : 'space-between',
+                                    alignItems     : 'center'
                                 }}
                             >
-                                {
-                                    token
-                                    ? (
-                                        <>
-                                            <button
-                                                onClick={() => handleEdit(blog.id!)}
-                                                style={{
-                                                    border         : 'none',
-                                                    padding        : '10px 15px',
-                                                    borderRadius   : '4px',
-                                                    cursor         : 'pointer'
-                                                }}
-                                            >
-                                                <FaFilePen size={"1.5rem"} title={"Edit"} color={"#05b138"}/>
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(blog.id!)}
-                                                style={{
-                                                    border         : 'none',
-                                                    padding        : '10px 15px',
-                                                    borderRadius   : '4px',
-                                                    cursor         : 'pointer'
-                                                }}
-                                            >
-                                                <FaRegTrashCan size={"1.5rem"} title={"Delete"} color={"#d60c0c"}/>
-                                            </button>
-                                        </>
-                                    )
-                                    : (<></>)
-                                }
+                                <div>
+                                    <Link href={`/pages/home/${blog.id}`}>
+                                        <h2
+                                            style={{
+                                                color     : '#09886A',
+                                                fontFamily: 'Arial, sans-serif',
+                                                fontSize  : '2rem'
+                                            }}
+                                        >
+                                            <b>{blog.title}</b>
+                                        </h2>
+                                    </Link>
+                                    <p>
+                                        <b>Author: {blog.authorName}</b>
+                                    </p>
+                                    <p>
+                                        <b>Publish Date: {new Date(blog.publishDate).toLocaleString("Locale", {
+                                            year  : "numeric",
+                                            month : "2-digit",
+                                            day   : "2-digit",
+                                            hour  : "2-digit",
+                                            minute: "2-digit"
+                                        })}</b>
+                                    </p>
+                                </div>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        gap    : '10px'
+                                    }}
+                                >
+                                    {
+                                        token
+                                        ? (
+                                            <>
+                                                <button
+                                                    onClick={() => handleEdit(blog.id!)}
+                                                    style={{
+                                                        border      : 'none',
+                                                        padding     : '10px 15px',
+                                                        borderRadius: '4px',
+                                                        cursor      : 'pointer'
+                                                    }}
+                                                >
+                                                    <FaFilePen
+                                                        size={"1.5rem"}
+                                                        title={"Edit"}
+                                                        color={"#05b138"}
+                                                    />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(blog.id!)}
+                                                    style={{
+                                                        border      : 'none',
+                                                        padding     : '10px 15px',
+                                                        borderRadius: '4px',
+                                                        cursor      : 'pointer'
+                                                    }}
+                                                >
+                                                    <FaRegTrashCan
+                                                        size={"1.5rem"}
+                                                        title={"Delete"}
+                                                        color={"#d60c0c"}
+                                                    />
+                                                </button>
+                                            </>
+                                        )
+                                        : (<></>)
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    ))
-                }
+                        ))
+                    }
+                </div>
             </div>
-        </div>
+        </>
     );
 }
