@@ -20,13 +20,13 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "Dan'sFarmaRoot",
-    applicationName: "Dan'sFarmaRoot Blog",
-    description: "Welcome to Dan'sFarmaRoot Blog. It provide lastest news.",
+    title: "Dan's Farmaroot",
+    applicationName: "Dan's Farmaroot Blog",
+    description: "Welcome to Dan's Farmaroot blog. It provides latest news.",
     authors: {
         name: "Daniel Kaye"
     },
-    keywords: "Ginseng, Dan'sFarmRoot, DFEnergy",
+    keywords: "Ginseng, Dan's Farmaroot, DFEnergy, Blog, blog",
 }
 
 export default function RootLayout({
