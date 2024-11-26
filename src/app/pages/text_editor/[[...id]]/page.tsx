@@ -150,7 +150,7 @@ export default function Page() {
 
     return (
         <div
-            className={"d-flex justify-items-center min-h-[100vh] bg-white"}
+            className={"flex justify-center min-h-[100vh] bg-white"}
             style={{ marginBottom: 0, paddingBottom: 0 }}
         >
             <div
