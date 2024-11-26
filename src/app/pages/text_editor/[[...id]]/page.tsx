@@ -65,6 +65,7 @@ export default function Page() {
                     setTitle(responseBlog.title);
                     setBlog(responseBlog);
                     setIsLoading(false);
+                    window.scrollTo(0,0);
                 })();
             } else {
                 setIsLoading(false);
@@ -73,6 +74,12 @@ export default function Page() {
             console.log(e);
         }
     }, []);
+
+    useEffect(() => {
+        if (!token){
+            router.push("/pages/login");
+        }
+    }, [token]);
 
     const handleCreatePost = () => {
         const content = JSON.stringify(quillRef.current?.getContents());

@@ -20,6 +20,7 @@ export default function BlogListPage() {
                 const response: Blog[] = await (await (httpService.callAPI("/api/blogs", null, "GET"))).json();
                 setBlogs(response);
                 setIsLoading(false);
+                window.scrollTo(0,0);
             } catch (e) {
                 console.log(e);
             }
