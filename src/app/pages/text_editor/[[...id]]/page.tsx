@@ -12,6 +12,8 @@ import {useParams, useRouter} from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import {jwtDecode} from "jwt-decode";
 
+
+
 export default function Page() {
     const httpService = new HttpServices();
     const [title, setTitle] = useState(""); // State for blog title
@@ -24,17 +26,17 @@ export default function Page() {
     }>();
     const [blog, setBlog] = useState<Blog>({
         authorName: "",
-        content    : "",
-        id         : "",
+        content: "",
+        id: "",
         publishDate: "",
-        title      : ""
+        title: ""
     });
     const [isLoading, setIsLoading] = useState(true);
     const quillRef: LegacyRef<Quill> = useRef(null);
     const {token} = useAuth();
-    const fontSizeArr = ['8px','9px','10px','12px','14px','16px','20px','24px','32px','42px','54px','68px','84px','98px'];
-    
-    
+    const fontSizeArr = ['8px', '9px', '10px', '12px', '14px', '16px', '20px', '24px', '32px', '42px', '54px', '68px', '84px', '98px'];
+
+
     const toolBarOptions = [
         [{'header': [1, 2, 3, 4, 5, 6, false]}],
         [{'size': ['small', false, 'large', 'huge']}],
@@ -52,16 +54,17 @@ export default function Page() {
     ];
 
     const options = {
-        debug      : "error",
-        modules    : {
+        debug: "error",
+        modules: {
             toolbar: toolBarOptions
         },
         placeholder: "Testing",
-        readOnly   : false,
-        theme      : "snow"
+        readOnly: false,
+        theme: "snow"
     };
 
     useEffect(() => {
+
         try {
             if (!token) {
                 router.push("/pages/login");
@@ -90,7 +93,7 @@ export default function Page() {
         if (!userName) {
             return;
         }
-        
+
         // Prepare blog data to send
         const blogData: BlogCreation = new BlogCreation(
             title, // Include title from state
@@ -133,15 +136,15 @@ export default function Page() {
     }
 
     if (isLoading) {
-        return <LoadingSpinner />;
+        return <LoadingSpinner/>;
     }
 
     return !isLoading && (
-        <div
-            className={"d-flex justify-items-center min-h-[100vh] bg-white"}
-        >
+        <div className={"d-flex justify-items-center min-h-[100vh] bg-white"}>
             <div
-                className={"w-full max-w-[800px] px-2.5 pt-4 text-[#333] font-[Arial, sans-serif]"}
+                className={
+                    "w-full max-w-[800px] px-2.5 pt-4 text-[#333] font-[Arial, sans-serif]"
+                }
             >
                 <input
                     type="text"
@@ -149,72 +152,77 @@ export default function Page() {
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Enter blog title"
                     style={{
-                        width       : '100%',
-                        padding     : '10px',
-                        marginBottom: '20px',
-                        borderRadius: '5px',
-                        border      : '1px solid #ccc'
+                        width: "100%",
+                        padding: "10px",
+                        marginBottom: "20px",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
                     }}
                 />
                 <div
                     style={{
-                        backgroundColor: 'white',
-                        padding  : '10px',
-                        border   : "black",
-                        borderRadius   : '8px',
-                        boxShadow      : '0 2px 4px rgba(0,0,0,0.1)',
-                        marginTop: '20px',
-                        marginBottom   : '20px'
+                        backgroundColor: "white",
+                        padding: "10px",
+                        border: "black",
+                        borderRadius: "8px",
+                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                        marginTop: "20px",
+                        marginBottom: "20px",
                     }}
                 >
                     <Editor
                         ref={quillRef}
                         readOnly={options.readOnly}
-                        defaultValue={params.id
-                                      ? new Delta(JSON.parse(blog?.content as string)["ops"])
-                                      : new Delta().insert(text)}
+                        defaultValue={
+                            params.id
+                                ? new Delta(JSON.parse(blog?.content as string)["ops"])
+                                : new Delta().insert(text)
+                        }
                         onSelectionChange={setRange}
                         onTextChange={setText}
                         options={options}
                     />
                 </div>
-                <button
-                    onClick={params.id
-                             ? handleUpdatePost
-                             : handleCreatePost}
+                <div
                     style={{
-                        marginTop      : '10px',
-                        marginRight    : '10px',
-                        padding        : '5px 10px',
-                        backgroundColor: '#B18560',
-                        color          : 'white',
-                        border         : 'none',
-                        borderRadius   : '25px',
-                        cursor         : 'pointer',
-                        width          : 'fit-content',
-                        minWidth       : '110px'
+                        display: "flex",
+                        justifyContent: "flex-end", // Align buttons to the right
+                        marginTop: "10px",
+                        gap: "10px", // Space between buttons
                     }}
                 >
-                    {params.id
-                     ? "Update Post"
-                     : "Create Post"}
-                </button>
-                <button
-                    onClick={handleCancel}
-                    style={{
-                        marginTop      : '10px',
-                        padding        : '5px 10px',
-                        backgroundColor: '#B18560',
-                        color          : 'white',
-                        border         : 'black',
-                        borderRadius   : '25px',
-                        cursor         : 'pointer',
-                        width          : 'fit-content',
-                        minWidth       : '110px'
-                    }}
-                >
-                    Cancel
-                </button>
+                    <button
+                        onClick={params.id ? handleUpdatePost : handleCreatePost}
+                        style={{
+                            padding: "5px 10px",
+                            backgroundColor: "#B18560",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "25px",
+                            cursor: "pointer",
+                            width: "fit-content",
+                            minWidth: "110px",
+                        }}
+                    >
+                        {params.id ? "Update Post" : "Create Post"}
+                    </button>
+                    <button
+                        onClick={handleCancel}
+                        style={{
+                            padding: "5px 10px",
+                            backgroundColor: "#B18560",
+                            color: "white",
+                            border: "black",
+                            borderRadius: "25px",
+                            cursor: "pointer",
+                            width: "fit-content",
+                            minWidth: "110px",
+
+                        }}
+                    >
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     );

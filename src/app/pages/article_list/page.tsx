@@ -73,11 +73,11 @@ export default function BlogListPage() {
         >
             <h1
                 style={{
-                    color     : '#333',
+                    color     : '#b18560',
                     fontFamily: 'Arial, sans-serif',
                     fontSize  : '2rem'
                 }}
-            >Latest News</h1>
+            ><b>Latest News</b></h1>
             <div
                 style={{
                     width     : '100%',
@@ -104,19 +104,19 @@ export default function BlogListPage() {
                             <div>
                                 <Link href={`/pages/home/${blog.id}`}><h2
                                     style={{
-                                        color     : '#333',
+                                        color     : '#09886A',
                                         fontFamily: 'Arial, sans-serif',
                                         fontSize  : '2rem'
                                     }}
                                 ><b>{blog.title}</b></h2></Link>
-                                <p>Author: {blog.authorName}</p>
-                                <p>Publish Date: {new Date(blog.publishDate).toLocaleString("Locale", {
+                                <p><b>Author: {blog.authorName}</b></p>
+                                <p><b>Publish Date: {new Date(blog.publishDate).toLocaleString("Locale", {
                                     year  : "numeric",
                                     month : "2-digit",
                                     day   : "2-digit",
                                     hour  : "2-digit",
                                     minute: "2-digit"
-                                })}</p>
+                                })}</b></p>
                             </div>
                             <div
                                 style={{
