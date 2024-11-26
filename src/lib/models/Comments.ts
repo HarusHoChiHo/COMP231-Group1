@@ -1,4 +1,3 @@
-import {id} from "postcss-selector-parser";
 import {Blog} from "@/lib/models/Blog";
 
 interface IComment {

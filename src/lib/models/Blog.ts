@@ -1,6 +1,3 @@
-import {User} from "@/lib/models/User";
-import {id} from "postcss-selector-parser";
-
 interface IBlog{
     id: string | null;
     title: string;

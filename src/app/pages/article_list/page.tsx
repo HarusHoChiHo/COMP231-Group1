@@ -1,10 +1,9 @@
 "use client";
 
-import {LegacyRef, useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 import {Blog} from "@/lib/models/Blog";
 import Link from "next/link";
-import Quill from "quill";
 import {useAuth} from "@/app/AuthContext";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import {FaFilePen, FaRegTrashCan} from "react-icons/fa6";
@@ -13,18 +12,7 @@ export default function BlogListPage() {
     const httpService = new HttpServices();
     const [blogs, setBlogs] = useState<Blog[]>();
     const [isLoading, setIsLoading] = useState(true);
-    const quillRef: LegacyRef<Quill> = useRef(null);
     const {token} = useAuth();
-
-    const options = {
-        debug      : "error",
-        modules    : {
-            toolbar: null
-        },
-        placeholder: "Testing",
-        readOnly   : false,
-        theme      : "snow"
-    };
 
     useEffect(() => {
         (async () => {

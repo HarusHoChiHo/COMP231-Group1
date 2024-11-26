@@ -1,5 +1,3 @@
-import {id} from "postcss-selector-parser";
-
 interface IUser {
     id: string; username: string;
 }

@@ -7,7 +7,7 @@ export class HttpServices{
     }
     
     async callAPI(route: string,  data: object | null | undefined, method: "POST" | "GET" | "DELETE", token: string | null = null){
-        let headers = new Headers();
+        const headers = new Headers();
         headers.append("Access-Control-Allow-Origin", process.env.LocalHost ?? "");
         headers.append("Content-Type", "application/json");
         

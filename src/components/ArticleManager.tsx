@@ -1,12 +1,15 @@
+"use strict"
+
 import React, { forwardRef, useEffect, useLayoutEffect, useRef, RefObject } from 'react';
 import Quill from 'quill';
+import Delta, {Op} from "quill-delta";
 
 interface EditorProps {
     readOnly?: boolean;
-    defaultValue?: any;
-    onTextChange?: (...args: any[]) => void;
-    onSelectionChange?: (...args: any[]) => void;
-    options: {}
+    defaultValue?: Delta | Op[];
+    onTextChange?: (...args: string[]) => void;
+    onSelectionChange?: (...args: object[]) => void;
+    options: object
 }
 
 const Editor = forwardRef<Quill, EditorProps>(

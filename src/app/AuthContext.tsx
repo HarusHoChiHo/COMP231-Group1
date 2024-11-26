@@ -1,7 +1,6 @@
 "use client"
 
 import React, {createContext, ReactNode, useEffect, useState} from "react";
-import {HttpServices} from "@/lib/HttpServices";
 
 interface AuthContextType {
     token: string | null;
@@ -18,7 +17,6 @@ interface AuthProviderProps {
 export function AuthProvider({children}: AuthProviderProps) {
     const [token, setToken] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
-    const httpServices = new HttpServices();
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");

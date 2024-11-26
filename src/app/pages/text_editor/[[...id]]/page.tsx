@@ -1,6 +1,6 @@
 "use client";
 
-import { LegacyRef, Suspense, useEffect, useRef, useState } from "react";
+import {LegacyRef, useEffect, useRef, useState} from "react";
 import Editor from "@/components/ArticleManager";
 import Delta from "quill-delta";
 import "quill/dist/quill.snow.css";
@@ -16,7 +16,6 @@ export default function Page() {
     const httpService = new HttpServices();
     const [title, setTitle] = useState(""); // State for blog title
     const [text, setText] = useState("");
-    const [range, setRange] = useState(); //const [lastChange, setLastChange] = useState();
     const router = useRouter();
     const params = useParams<{ id: string | undefined }>();
     const [blog, setBlog] = useState<Blog>({
@@ -29,22 +28,7 @@ export default function Page() {
     const [isLoading, setIsLoading] = useState(true);
     const quillRef: LegacyRef<Quill> = useRef(null);
     const { token } = useAuth();
-    const fontSizeArr = [
-        "8px",
-        "9px",
-        "10px",
-        "12px",
-        "14px",
-        "16px",
-        "20px",
-        "24px",
-        "32px",
-        "42px",
-        "54px",
-        "68px",
-        "84px",
-        "98px",
-    ];
+    
     const toolBarOptions = [
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         [{ size: ["small", false, "large", "huge"] }],
@@ -190,7 +174,6 @@ export default function Page() {
                                 ? new Delta(JSON.parse(blog?.content as string)["ops"])
                                 : new Delta().insert(text)
                         }
-                        onSelectionChange={setRange}
                         onTextChange={setText}
                         options={options}
                     />
