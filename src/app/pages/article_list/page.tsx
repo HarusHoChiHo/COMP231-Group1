@@ -1,12 +1,12 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {Suspense, useEffect, useState} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 import {Blog} from "@/lib/models/Blog";
 import Link from "next/link";
 import {useAuth} from "@/app/AuthContext";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import {FaFilePen, FaRegTrashCan} from "react-icons/fa6";
+import Loading from "@/app/loading";
 
 export default function BlogListPage() {
     const httpService = new HttpServices();
@@ -46,7 +46,7 @@ export default function BlogListPage() {
     };
 
     if (isLoading) {
-        return <LoadingSpinner />;
+        return <Loading />;
     }
 
     return (

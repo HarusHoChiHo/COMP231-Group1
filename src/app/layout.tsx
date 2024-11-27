@@ -1,4 +1,3 @@
-
 import localFont from "next/font/local";
 import "./globals.css";
 import "react-quill/dist/quill.snow.css";
@@ -20,13 +19,13 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "Dan's Farmaroot",
+    title          : "Dan's Farmaroot",
     applicationName: "Dan's Farmaroot Blog",
-    description: "Welcome to Dan's Farmaroot blog. It provides latest news.",
-    authors: {
+    description    : "Welcome to Dan's Farmaroot blog. It provides latest news.",
+    authors        : {
         name: "Daniel Kaye"
     },
-    keywords: "Ginseng, Dan's Farmaroot, DFEnergy, Blog, blog",
+    keywords       : "Ginseng, Dan's Farmaroot, DFEnergy, Blog, blog",
 }
 
 export default function RootLayout({

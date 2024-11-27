@@ -11,6 +11,7 @@ import { useAuth } from "@/app/AuthContext";
 import { useParams, useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { jwtDecode } from "jwt-decode";
+import Loading from "@/app/loading";
 
 export default function Page() {
     const httpService = new HttpServices();
@@ -136,7 +137,7 @@ export default function Page() {
     };
 
     if (isLoading) {
-        return <LoadingSpinner />;
+        return <Loading />;
     }
 
     return (
