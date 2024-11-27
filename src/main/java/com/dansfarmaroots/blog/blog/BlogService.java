@@ -15,7 +15,7 @@ public class BlogService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Blog> getAllBlogs() {
+    public List<BlogWithoutContent> getAllBlogs() {
         return blogRepository.findAllByOrderByPublishDateDesc();
     }
 

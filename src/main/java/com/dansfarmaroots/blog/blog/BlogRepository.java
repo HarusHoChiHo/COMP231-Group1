@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface BlogRepository extends MongoRepository<Blog, String> {
     Optional<Blog> findById(String id);
-    List<Blog> findAllByOrderByPublishDateDesc();
+    List<BlogWithoutContent> findAllByOrderByPublishDateDesc();
     long removeById(String id);
 }

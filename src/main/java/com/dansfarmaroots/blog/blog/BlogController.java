@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,7 @@ public class BlogController {
     private BlogService blogService;
 
     @GetMapping
-    public ResponseEntity<List<Blog>> getAllBlogs() {
+    public ResponseEntity<List<BlogWithoutContent>> getAllBlogs() {
         return new ResponseEntity<>(blogService.getAllBlogs(), HttpStatus.OK);
     }
 

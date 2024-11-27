@@ -37,8 +37,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .cors(cors->cors.disable())
+        http.cors(cors -> cors.disable())
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((authz) -> authz
 //                    .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll() // For swagger
@@ -46,11 +45,11 @@ public class SecurityConfiguration {
 //                    .requestMatchers("/api/comments/**").permitAll() // For comments
 //                    .requestMatchers("/api/user/login/**").permitAll() // For login
 //                    .anyRequest().authenticated()
-                            .anyRequest().permitAll()
-            ).sessionManagement((management) -> management
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            ).httpBasic(withDefaults()
-            ).addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                    .anyRequest().permitAll()
+            )
+            .sessionManagement((management) -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .httpBasic(withDefaults())
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

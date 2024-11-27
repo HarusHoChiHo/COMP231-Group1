@@ -23,3 +23,4 @@ public class Blog {
     private Date publishDate;
     private String authorName;
 }
+
