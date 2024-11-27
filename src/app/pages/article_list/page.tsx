@@ -1,6 +1,6 @@
 "use client";
 
-import {Suspense, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {HttpServices} from "@/lib/HttpServices";
 import {Blog} from "@/lib/models/Blog";
 import Link from "next/link";
