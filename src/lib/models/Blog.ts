@@ -1,7 +1,7 @@
 interface IBlog{
     id: string | null;
     title: string;
-    content: string;
+    content?: string;
     publishDate: string;
 }
 
@@ -25,7 +25,7 @@ export class BlogCreation implements IBlog{
 export class Blog implements IBlog{
     id: string;
     title: string;
-    content: string;
+    content?: string;
     publishDate: string;
     authorName: string;
 
