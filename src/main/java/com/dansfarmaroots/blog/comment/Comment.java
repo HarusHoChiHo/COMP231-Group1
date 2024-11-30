@@ -20,7 +20,5 @@ public class Comment {
     private String id;
     private String content;
     public Date publishDate;
-
-    @DBRef
-    private Blog blogId;
+    private String blogId;
 }
