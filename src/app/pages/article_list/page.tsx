@@ -32,7 +32,7 @@ export default function BlogListPage() {
         if (!confirmDelete) return;
 
         try {
-            await httpService.callAPI(`/api/blogs/${id}`, null, "DELETE");
+            await httpService.callAPI(`/api/blogs/${id}`, null, "DELETE", token);
             setBlogs(blogs?.filter((blog) => blog.id !== id));
             alert("Blog deleted successfully.");
         } catch (e) {
