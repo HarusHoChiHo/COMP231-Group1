@@ -1,5 +1,3 @@
-import {Blog} from "@/lib/models/Blog";
-
 interface IComment {
     id: string | null;
     content: string;
