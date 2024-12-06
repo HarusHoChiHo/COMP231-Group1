@@ -47,7 +47,7 @@ export default function Page() {
     const options = {
         debug: "error",
         modules: { toolbar: toolBarOptions },
-        placeholder: "Testing",
+        placeholder: "Writing your article here...",
         readOnly: false,
         theme: "snow",
     };
