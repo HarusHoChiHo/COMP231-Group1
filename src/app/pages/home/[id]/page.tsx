@@ -4,7 +4,7 @@ import React, { LegacyRef, useEffect, useRef, useState } from "react";
 import { HttpServices } from "@/lib/HttpServices";
 import { Blog } from "@/lib/models/Blog";
 import { useParams } from "next/navigation";
-import { Comments, CommentsCreation } from "@/lib/models/Comments";
+import { Comments } from "@/lib/models/Comments";
 import Delta from "quill-delta";
 import Editor from "@/components/ArticleManager";
 import Quill from "quill";
@@ -19,7 +19,7 @@ export default function BlogDetailPage() {
     const [blog, setBlog] = useState<Blog>();
     const [comments, setComments] = useState<Comments[]>([]);
     const [newComment, setNewComment] = useState<string>("");
-    const [id, setId] = useState<string>("");
+    const [blogId, setBlogId] = useState<string>("");
 
     const quillRef: LegacyRef<Quill> = useRef(null);
 
@@ -36,7 +36,7 @@ export default function BlogDetailPage() {
         // Fetch the blog and comments data
         (async () => {
             try {
-                setId(params.id);
+                setBlogId(params.id);
                 const responseBlog: Blog = await (
                     await httpService.callAPI(`/api/blogs/${params.id}`, null, "GET")
                 ).json();
@@ -61,11 +61,11 @@ export default function BlogDetailPage() {
         if (newComment.trim()) {
             (async () => {
                 try {
-                    const newComments: CommentsCreation = new CommentsCreation(
+                    const newComments: Comments = new Comments(
                         null,
                         newComment,
                         new Date().toUTCString(),
-                        { id: id }
+                        blogId
                     );
 
                     setComments([
