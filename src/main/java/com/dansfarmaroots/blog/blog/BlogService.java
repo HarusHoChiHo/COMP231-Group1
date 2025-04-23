@@ -16,18 +16,22 @@ public class BlogService {
     private UserRepository userRepository;
 
     public List<BlogWithoutContent> getAllBlogs() {
+
         return blogRepository.findAllByOrderByPublishDateDesc();
     }
 
     public Blog createBlog(Blog blog) {
+
         return blogRepository.save(blog);
     }
 
     public Blog updateBlog(Blog blog) {
+
         return blogRepository.save(blog);
     }
 
     public long removeBlog(String id) {
+
         return blogRepository.removeById(id);
     }
 

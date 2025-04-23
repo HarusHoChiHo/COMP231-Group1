@@ -37,7 +37,6 @@ class BlogApplicationTests {
     private static String token;
     private static String newId;
 
-
     @Test
     @Order(0)
     void getAllBlogs() throws Exception {

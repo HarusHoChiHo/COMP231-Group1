@@ -30,7 +30,9 @@ public class BlogController {
 
     @PostMapping
     public ResponseEntity<Blog> createBlog(@RequestBody Blog blog) {
-        UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails details = (UserDetails) SecurityContextHolder.getContext()
+                                                                 .getAuthentication()
+                                                                 .getPrincipal();
         blog.setAuthorName(details.getUsername());
         return new ResponseEntity<>(blogService.createBlog(blog), HttpStatus.CREATED);
     }
